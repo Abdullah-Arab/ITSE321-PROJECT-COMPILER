@@ -17,6 +17,7 @@ In this project, we will be implementing a basic compiler
  <!-- that can perform lexical analysis, syntax analysis, semantic analysis, and code generation. The compiler will take a source code written in a specific programming language and produce an executable binary file. -->
 
 ## Features
+- ( 0.1 ) the compiler can read a source text file and print it to a new text file.
 <!-- 
 - Lexical analysis: Tokenizing the source code into meaningful tokens.
 - Syntax analysis: Parsing the tokens to check for correct syntax.
@@ -38,7 +39,8 @@ To get started with this project, follow these steps:
 To use the compiler, run the following command:
     
     ```bash
-    $ ./compiler <source-file>
+    $ make compiler
+    $ ./compiler
     ```
 
 ## Contributing
