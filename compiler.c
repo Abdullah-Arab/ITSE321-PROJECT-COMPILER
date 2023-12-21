@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <ctype.h>
 
 
 int main(){
@@ -26,13 +27,46 @@ int main(){
       // Read the file into fileSrcContent
       // should be char by char
       // fgetc
-      while (1) {
         char c = fgetc(fileSrc);
+        char token[256];
+        int i = 0;
+
+      while (1) {
+        // skip whitespace
+        while(isspace(c)){
+            c = fgetc(fileSrc);
+            if (feof(fileSrc)) {
+            break;
+        }
+        }
+        
+        // if end of file, break
         if (feof(fileSrc)) {
             break;
         }
+
+        // if the charachter is a letter, it's the start of a token ( identifier or keyword )
+        if (isalpha(c)) {
+            do{
+                token[i++] = c;
+                c = fgetc(fileSrc);
+            } while (isalnum(c) && !feof(fileSrc));
+
+            token[i] = '\0';
+            printf("Token: %s\n", token);
+            i = 0;
+            
+        }else{
+           // If the character is not a letter, just print it and move on
         printf("%c", c);
         fputc(c, fileDest);
+        c = fgetc(fileSrc);
+        }
+        
+        
+
+        // printf("%c", c);
+        // fputc(c, fileDest);
       }
 
     
