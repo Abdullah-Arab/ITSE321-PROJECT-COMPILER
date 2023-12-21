@@ -18,6 +18,7 @@ In this project, we will be implementing a basic compiler
 
 ## Features
 - ( 0.1 ) the compiler can read a source text file and print it to a new text file.
+- ( 0.2 ) read char by char
 <!-- 
 - Lexical analysis: Tokenizing the source code into meaningful tokens.
 - Syntax analysis: Parsing the tokens to check for correct syntax.
