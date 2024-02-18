@@ -1,5 +1,1 @@
-<keyword, int>
-<id, 1>
-<id, 1>
-<id, 2>
-<number, 3>
+<KEYWORD, int> <ID, 1> <=> <ID, 1> <+> <(> <ID, 2> <*> <CONST, 3> <)> <;> 

@@ -1,7 +1,4 @@
-Error: Unknown character =
 Info: abc already declared
-Error: Unknown character +
-Error: Unknown character *
 Compilation Successful
 ----------------------------
 Symbol Table
@@ -10,6 +7,6 @@ abc	identifier	1
 b	identifier	1
 ----------------------------
 Date: Feb 18 2024
-Time: 21:06:07
+Time: 21:43:31
 Compiled by: Abdullah Arab ( 2201805579 ) 
-compiled in 0.005354 seconds
+compiled in 0.002525 seconds

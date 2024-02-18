@@ -62,15 +62,42 @@ int alreadyDeclared(char *name)
 
 int isOperator(char *token)
 {
-    char operators[32][10] = {"+", "-", "*", "/", "%", "++", "--", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"};
-    for (int i = 0; i < 32; i++)
+    switch (*token)
     {
-        if (strcmp(token, operators[i]) == 0)
-        {
-            return 1;
-        }
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+    case '%':
+    case '=':
+    case '>':
+    case '<':
+    case '&':
+    case '|':
+    case '!':
+        return 1;
+    default:
+        return 0;
     }
-    return 0;
+}
+
+int isSpecial(char *token)
+{
+    switch (*token)
+    {
+    case '(':
+    case ')':
+    case '{':
+    case '}':
+    case '[':
+    case ']':
+    case ';':
+    case ',':
+    case '.':
+        return 1;
+    default:
+        return 0;
+    }
 }
 
 int main()
@@ -84,9 +111,6 @@ int main()
 
     // Declare Keywords
     char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return", "printf", "scanf", "main", "string"};
-
-    // Declare special characters
-    char specialChars[32][10] = {"(", ")", "{", "}", "[", "]", ";", ":", ",", ".", "\\"};
 
     // Open the files
     fileSrc = fopen("source.txt", "r+");
@@ -129,6 +153,35 @@ int main()
             c = fgetc(fileSrc);
         }
 
+        // skip comments
+        if (c == '/')
+        {
+            c = fgetc(fileSrc);
+            if (c == '/')
+            {
+                while (c != '\n')
+                {
+                    c = fgetc(fileSrc);
+                }
+            }
+            else if (c == '*')
+            {
+                c = fgetc(fileSrc);
+                while (1)
+                {
+                    if (c == '*')
+                    {
+                        c = fgetc(fileSrc);
+                        if (c == '/')
+                        {
+                            break;
+                        }
+                    }
+                    c = fgetc(fileSrc);
+                }
+            }
+        }
+
         // if end of file, break
         if (feof(fileSrc))
         {
@@ -164,7 +217,7 @@ int main()
             // if it's a keyword
             if (isKeyword)
             {
-                fprintf(tokensDest, "<keyword, %s>\n", token);
+                fprintf(tokensDest, "<KEYWORD, %s> ", token);
             }
 
             else
@@ -181,7 +234,7 @@ int main()
                     insertSymbol(token, "identifier", 1);
                     id++;
                 }
-                fprintf(tokensDest, "<id, %d>\n", id);
+                fprintf(tokensDest, "<ID, %d> ", id);
             }
         }
         else if (isdigit(c))
@@ -193,7 +246,7 @@ int main()
                 c = fgetc(fileSrc);
             }
             token[tokenIndex] = '\0';
-            fprintf(tokensDest, "<number, %s>\n", token);
+            fprintf(tokensDest, "<CONST, %s> ", token);
         }
         else if (c == '"')
         {
@@ -207,7 +260,7 @@ int main()
             }
             token[tokenIndex++] = c;
             token[tokenIndex] = '\0';
-            fprintf(tokensDest, "<string, %s>\n", token);
+            fprintf(tokensDest, "<STRING, %s> ", token);
             c = fgetc(fileSrc);
         }
         else if (c == '\'')
@@ -222,7 +275,7 @@ int main()
             }
             token[tokenIndex++] = c;
             token[tokenIndex] = '\0';
-            fprintf(tokensDest, "<char, %s>\n", token);
+            fprintf(tokensDest, "<CHAR, %s> ", token);
             c = fgetc(fileSrc);
         }
         else if (isOperator(&c))
@@ -234,35 +287,19 @@ int main()
                 c = fgetc(fileSrc);
             }
             token[tokenIndex] = '\0';
-            fprintf(tokensDest, "<operator, %s>\n", token);
+            fprintf(tokensDest, "<%s> ", token);
         }
         else
         {
-            // check if the char is a special character
-            int isSpecial = 0;
-            for (int i = 0; i < 32; i++)
+            // if it's any other special character
+            if (isSpecial(&c))
             {
-                if (c == specialChars[i][0])
-                {
-                    isSpecial = 1;
-                    break;
-                }
-            }
-
-            // if it's a special character
-            if (isSpecial)
-            {
-                fprintf(tokensDest, "<special, %c>\n", c);
-                c = fgetc(fileSrc);
-            }
-            else
-            {
-                // if it's not a special character, it's an error
-                fprintf(logDest, "Error: Unknown character %c\n", c);
+                token[tokenIndex++] = c;
+                token[tokenIndex] = '\0';
+                fprintf(tokensDest, "<%s> ", token);
                 c = fgetc(fileSrc);
             }
         }
-
         // Remove all the white spaces from the source file
         fprintf(cleanDest, "%c", c);
         c = fgetc(fileSrc);
