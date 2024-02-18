@@ -67,7 +67,13 @@ int main()
     FILE *fileDest;
 
     // Declare Keywords
-    char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return"};
+    char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return", "printf", "scanf", "main"};
+
+    //Declare operators
+    char operators[32][10] = {"+", "-", "*", "/", "%", "++", "--", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"};
+
+    // Declare special characters
+    char specialChars[32][10] = {"(", ")", "{", "}", "[", "]", ";", ":", ",", ".", "\"", "\'", "\\"};
 
     // Open the files
     fileSrc = fopen("source.txt", "r+");
@@ -85,7 +91,7 @@ int main()
     }
     // get source file char by char
     char c = fgetc(fileSrc);
-     int id = 0;
+    int id = 0;
     while (1)
     {
    
