@@ -1,1 +1,1 @@
-intabc=abc+b*x;abc=abc+b*x;gg=gg+b*x;
+  = + *;

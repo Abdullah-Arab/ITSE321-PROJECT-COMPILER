@@ -70,7 +70,7 @@ int main()
     FILE *logDest;
 
     // Declare Keywords
-    char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return", "printf", "scanf", "main"};
+    char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return", "printf", "scanf", "main", "string"};
 
     // Declare operators
     char operators[32][10] = {"+", "-", "*", "/", "%", "++", "--", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"};
@@ -124,6 +124,104 @@ int main()
         {
             break;
         }
+
+        // Tokenize the source file
+        char token[256];
+        int tokenIndex = 0;
+
+        // check if the char is a letter
+        if (isalpha(c))
+        {
+            // get the whole word
+            while (isalnum(c) || c == '_')
+            {
+                token[tokenIndex++] = c;
+                c = fgetc(fileSrc);
+            }
+            token[tokenIndex] = '\0';
+
+            // check if the word is a keyword
+            int isKeyword = 0;
+            for (int i = 0; i < 32; i++)
+            {
+                if (strcmp(token, keywords[i]) == 0)
+                {
+                    isKeyword = 1;
+                    break;
+                }
+            }
+
+            // if it's a keyword
+            if (isKeyword)
+            {
+                fprintf(tokensDest, "<keyword, %s>\n", token);
+            }
+
+            else
+            {
+                // if it's not a keyword, it's an identifier
+                fprintf(tokensDest, "<identifier, %s>\n", token);
+                /// BIG QUSESTION HERE !!
+                if (c == '(')
+                {
+                    fprintf(tokensDest, "<special, (>\n");
+                }
+            }
+        }
+        else if (isdigit(c))
+        {
+            // get the whole number
+            while (isdigit(c))
+            {
+                token[tokenIndex++] = c;
+                c = fgetc(fileSrc);
+            }
+            token[tokenIndex] = '\0';
+            fprintf(tokensDest, "<number, %s>\n", token);
+        }
+        else if (c == '"')
+        {
+            // get the whole string
+            token[tokenIndex++] = c;
+            c = fgetc(fileSrc);
+            while (c != '"')
+            {
+                token[tokenIndex++] = c;
+                c = fgetc(fileSrc);
+            }
+            token[tokenIndex++] = c;
+            token[tokenIndex] = '\0';
+            fprintf(tokensDest, "<string, %s>\n", token);
+            c = fgetc(fileSrc);
+        }
+        else if (c == '\'')
+        {
+            // get the whole char
+            token[tokenIndex++] = c;
+            c = fgetc(fileSrc);
+            while (c != '\'')
+            {
+                token[tokenIndex++] = c;
+                c = fgetc(fileSrc);
+            }
+            token[tokenIndex++] = c;
+            token[tokenIndex] = '\0';
+            fprintf(tokensDest, "<char, %s>\n", token);
+            c = fgetc(fileSrc);
+        }
+        else
+        {
+            int isOperator = 0;
+            for (int i = 0; i < 32; i++)
+            {
+                if (c == operators[i][0])
+                {
+                    isOperator = 1;
+                    break;
+                }
+            }
+        }
+
         // Remove all the white spaces from the source file
         fprintf(cleanDest, "%c", c);
         c = fgetc(fileSrc);

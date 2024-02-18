@@ -1,0 +1,5 @@
+<keyword, int>
+<identifier, abc>
+<identifier, abc>
+<identifier, b>
+<number, 3>

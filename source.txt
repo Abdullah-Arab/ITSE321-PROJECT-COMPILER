@@ -1,3 +1,2 @@
-int abc = abc + b * x;
-abc = abc + b * x;
-gg = gg + b * x;
+int abc = abc + b * 3;
+
