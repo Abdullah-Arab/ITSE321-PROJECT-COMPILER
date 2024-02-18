@@ -60,6 +60,19 @@ int alreadyDeclared(char *name)
     return 0;
 }
 
+int isOperator(char *token)
+{
+    char operators[32][10] = {"+", "-", "*", "/", "%", "++", "--", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"};
+    for (int i = 0; i < 32; i++)
+    {
+        if (strcmp(token, operators[i]) == 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int main()
 {
 
@@ -72,11 +85,8 @@ int main()
     // Declare Keywords
     char keywords[32][10] = {"int", "float", "char", "if", "else", "while", "for", "return", "printf", "scanf", "main", "string"};
 
-    // Declare operators
-    char operators[32][10] = {"+", "-", "*", "/", "%", "++", "--", "==", "!=", ">", "<", ">=", "<=", "&&", "||", "!"};
-
     // Declare special characters
-    char specialChars[32][10] = {"(", ")", "{", "}", "[", "]", ";", ":", ",", ".", "\"", "\'", "\\"};
+    char specialChars[32][10] = {"(", ")", "{", "}", "[", "]", ";", ":", ",", ".", "\\"};
 
     // Open the files
     fileSrc = fopen("source.txt", "r+");
@@ -160,12 +170,18 @@ int main()
             else
             {
                 // if it's not a keyword, it's an identifier
-                fprintf(tokensDest, "<identifier, %s>\n", token);
-                /// BIG QUSESTION HERE !!
-                if (c == '(')
+                // check if the identifier is already declared
+                if (alreadyDeclared(token))
                 {
-                    fprintf(tokensDest, "<special, (>\n");
+                    fprintf(logDest, "Info: %s already declared\n", token);
                 }
+                else
+                {
+                    // if it's not declared, add it to the symbol table
+                    insertSymbol(token, "identifier", 1);
+                    id++;
+                }
+                fprintf(tokensDest, "<id, %d>\n", id);
             }
         }
         else if (isdigit(c))
@@ -209,16 +225,41 @@ int main()
             fprintf(tokensDest, "<char, %s>\n", token);
             c = fgetc(fileSrc);
         }
+        else if (isOperator(&c))
+        {
+            // get the whole operator
+            while (isOperator(&c))
+            {
+                token[tokenIndex++] = c;
+                c = fgetc(fileSrc);
+            }
+            token[tokenIndex] = '\0';
+            fprintf(tokensDest, "<operator, %s>\n", token);
+        }
         else
         {
-            int isOperator = 0;
+            // check if the char is a special character
+            int isSpecial = 0;
             for (int i = 0; i < 32; i++)
             {
-                if (c == operators[i][0])
+                if (c == specialChars[i][0])
                 {
-                    isOperator = 1;
+                    isSpecial = 1;
                     break;
                 }
+            }
+
+            // if it's a special character
+            if (isSpecial)
+            {
+                fprintf(tokensDest, "<special, %c>\n", c);
+                c = fgetc(fileSrc);
+            }
+            else
+            {
+                // if it's not a special character, it's an error
+                fprintf(logDest, "Error: Unknown character %c\n", c);
+                c = fgetc(fileSrc);
             }
         }
 
