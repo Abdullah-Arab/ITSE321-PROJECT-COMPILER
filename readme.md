@@ -6,6 +6,7 @@ This project is aimed at creating a simple compiler using the C programming lang
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Todo](#todo)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -24,12 +25,21 @@ In this project, we will be implementing a basic compiler
   - ( 0.3.2 ) find tokens: identifires, operators, keywords only in a basic way
   
               | Name | Type | Size | Dimension | Line of Declaration | Line of Use | Address |
+
+  - ( 0.3.3 ) find tokens: identifires, operators, keywords, numbers, strings, comments, and special characters
 <!-- 
 - Lexical analysis: Tokenizing the source code into meaningful tokens.
 - Syntax analysis: Parsing the tokens to check for correct syntax.
 - Semantic analysis: Checking for semantic errors and generating symbol tables.
 - Code generation: Generating machine code from the parsed source code.
 - Error handling: Providing meaningful error messages for easier debugging. -->
+
+## Todo
+- ( 0.4 ) Show the tokens in a new text file
+- ( 0.5 ) Show symbol table in a new text file
+- ( 0.6 ) Show the errors in a new text file ( log file )
+- ( 0.7 ) Show the source code without spaces, comments and empty lines in a new text file
+- ( 0.8 ) Show compilation info in the log file and in the console
 
 ## Getting Started
 
