@@ -1,4 +1,0 @@
-<id0, operator: =>
-<id2, operator: +>
-<id4, operator: *>
-<id6, operator: ;>
