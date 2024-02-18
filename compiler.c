@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_SYMBOLS 256
 
@@ -123,12 +124,29 @@ int main()
         {
             break;
         }
-
+        // Remove all the white spaces from the source file
         fprintf(cleanDest, "%c", c);
         c = fgetc(fileSrc);
-        // todo: remove all the white spaces from the source file
     }
     printSymbolTable();
+
+    fprintf(logDest, "Compilation Successful\n");
+    fprintf(logDest, "----------------------------\n");
+    fprintf(logDest, "Symbol Table\n");
+    fprintf(logDest, "Name\tType\tSize\n");
+    for (int i = 0; i < symbolCount; i++)
+    {
+        fprintf(logDest, "%s\t%s\t%d\n", symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+    }
+    fprintf(logDest, "----------------------------\n");
+
+    // show date and time
+    fprintf(logDest, "Date: %s\n", __DATE__);
+    fprintf(logDest, "Time: %s\n", __TIME__);
+    fprintf(logDest, "Compiled by: Abdullah Arab ( 2201805579 ) \n");
+    // show compilation duration
+    fprintf(logDest, "compiled in %f seconds\n", (double)clock() / CLOCKS_PER_SEC);
+    printf("\033[0;32mCompilation Successful in \033[1;32m%f\n", (double)clock() / CLOCKS_PER_SEC);
 
     // close file
     fclose(logDest);

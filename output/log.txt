@@ -1,0 +1,9 @@
+Compilation Successful
+----------------------------
+Symbol Table
+Name	Type	Size
+----------------------------
+Date: Feb 18 2024
+Time: 17:42:16
+Compiled by: Abdullah Arab ( 2201805579 ) 
+compiled in 0.003047 seconds
