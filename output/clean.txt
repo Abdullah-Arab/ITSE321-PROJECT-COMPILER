@@ -1,3 +1,1 @@
- =a+(b*3);
-
-
+intxyz=x+(y*3);stringabc=" Hello world ";

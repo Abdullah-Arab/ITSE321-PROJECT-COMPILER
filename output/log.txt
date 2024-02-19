@@ -1,12 +1,15 @@
-Info: abc already declared
+Error: Unknown character (
+)
 Compilation Successful
 ----------------------------
 Symbol Table
 ID	Name	T_Type	Size
-1|	abc	identifier	1
-2|	b	identifier	1
+1|	xyz	identifier	1
+2|	x	identifier	1
+3|	y	identifier	1
+4|	abc	identifier	1
 ----------------------------
 Date: Feb 19 2024
-Time: 09:37:00
+Time: 09:45:04
 Compiled by: Abdullah Arab ( 2201805579 ) 
-compiled in 0.002774 seconds
+compiled in 0.002352 seconds

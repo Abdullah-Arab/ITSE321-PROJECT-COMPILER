@@ -235,6 +235,7 @@ int main()
             if (isKeyword)
             {
                 fprintf(tokensDest, "<KEYWORD, %s> ", token);
+                fprintf(cleanDest, "%s", token);
             }
 
             else
@@ -253,6 +254,7 @@ int main()
                 }
                 int tokenId = getSymbolId(token);
                 fprintf(tokensDest, "<ID, %d> ", tokenId);
+                fprintf(cleanDest, "%s", token);
             }
         }
         else if (isdigit(c))
@@ -265,6 +267,7 @@ int main()
             }
             token[tokenIndex] = '\0';
             fprintf(tokensDest, "<CONST, %s> ", token);
+            fprintf(cleanDest, "%s", token);
         }
         else if (c == '"')
         {
@@ -279,6 +282,7 @@ int main()
             token[tokenIndex++] = c;
             token[tokenIndex] = '\0';
             fprintf(tokensDest, "<STRING, %s> ", token);
+            fprintf(cleanDest, "%s", token);
             c = fgetc(fileSrc);
         }
         else if (c == '\'')
@@ -294,6 +298,7 @@ int main()
             token[tokenIndex++] = c;
             token[tokenIndex] = '\0';
             fprintf(tokensDest, "<CHAR, %s> ", token);
+            fprintf(cleanDest, "%s", token);
             c = fgetc(fileSrc);
         }
         else if (isOperator(&c))
@@ -306,6 +311,7 @@ int main()
             }
             token[tokenIndex] = '\0';
             fprintf(tokensDest, "<%s> ", token);
+            fprintf(cleanDest, "%s", token);
         }
         else
         {
@@ -315,12 +321,13 @@ int main()
                 token[tokenIndex++] = c;
                 token[tokenIndex] = '\0';
                 fprintf(tokensDest, "<%s> ", token);
+                fprintf(cleanDest, "%s", token);
                 c = fgetc(fileSrc);
+            } else{
+                fprintf(logDest, "Error: Unknown character (%c)\n", c);
             }
         }
-        // Remove all ther white spaces from the source file
-        fprintf(cleanDest, "%c", c);
-        // c = fgetc(fileSrc);
+    
     }
     printSymbolTable();
 
