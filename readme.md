@@ -16,6 +16,12 @@ This project is aimed at creating a simple compiler using the C programming lang
 
 In this project, we will be implementing a basic compiler
  <!-- that can perform lexical analysis, syntax analysis, semantic analysis, and code generation. The compiler will take a source code written in a specific programming language and produce an executable binary file. -->
+ ### Output files
+  - The compiler will generate the following output files:
+    - A log file containing compilation information and errors. [Log](output/log.txt)
+    - A symbol table containing information about the variables and functions in the source code.  [Log](output/log.txt)
+    - A file containing the tokens extracted from the source code. [Tokens](output/tokens.txt)
+    - A file containing the source code without spaces, comments, and empty lines. [Cleaned Code](output/clean.txt)
 
 ## Features
 - ( 0.1 ) the compiler can read a source text file and print it to a new text file.
@@ -31,6 +37,8 @@ In this project, we will be implementing a basic compiler
   - ( 0.5 ) Show symbol table in a new text file
   - ( 0.6 ) Show the errors in a new text file ( log file )
   - ( 0.7 ) Show compilation info in the log file and in the console
+  - ( 0.8 ) Show the source code without spaces, comments and empty lines in a new text file
+  - ( 0.9 ) Solve spacing errors: the compiler should ignore spaces, tabs, and new lines
 <!-- 
 - Lexical analysis: Tokenizing the source code into meaningful tokens.
 - Syntax analysis: Parsing the tokens to check for correct syntax.
@@ -40,10 +48,6 @@ In this project, we will be implementing a basic compiler
 
 ## Todo
 
-
-
-- ( 0.8 ) Show the source code without spaces, comments and empty lines in a new text file
-- ( 0.9 ) Solve spacing errors: the compiler should ignore spaces, tabs, and new lines
 
 
 ## Getting Started
