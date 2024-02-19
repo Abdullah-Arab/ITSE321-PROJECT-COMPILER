@@ -320,7 +320,7 @@ int main()
         }
         // Remove all ther white spaces from the source file
         fprintf(cleanDest, "%c", c);
-        c = fgetc(fileSrc);
+        // c = fgetc(fileSrc);
     }
     printSymbolTable();
 
