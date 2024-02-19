@@ -323,11 +323,26 @@ int main()
                 fprintf(tokensDest, "<%s> ", token);
                 fprintf(cleanDest, "%s", token);
                 c = fgetc(fileSrc);
-            } else{
-                fprintf(logDest, "Error: Unknown character (%c)\n", c);
+            }
+            else
+            {
+                // fprintf(logDest, "Error: Unknown character (%c)\n", c);
+                switch (c)
+                {
+                case '\0':
+                    printf("\033[0;31mError: Unknown character (\\0)\n");
+                    fprintf(logDest, "Error: Unknown character (\\0)\n");
+                    break;
+                case '\n':
+                    printf("\033[0;31mError: Unknown character (\\n)\n");
+                    fprintf(logDest, "Error: Unknown character (\\n)\n");
+                    break;
+                default:
+                    printf("\033[0;31mError: Unknown character (%c)\n", c);
+                    fprintf(logDest, "Error: Unknown character (%c)\n", c);
+                }
             }
         }
-    
     }
     printSymbolTable();
 

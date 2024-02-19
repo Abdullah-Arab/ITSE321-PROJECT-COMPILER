@@ -1,1 +1,1 @@
-intxyz=x+(y*3);stringabc=" Hello world ";
+intx=x+(y*3);

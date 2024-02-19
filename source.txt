@@ -1,4 +1,4 @@
-int xyz = x + ( y * 3 );
-string abc = " Hello world " ;
+int x = x + ( y * 3 );
+// string abc = " Hello world " ;
 // int x = 3.14 ;
 
