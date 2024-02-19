@@ -7,6 +7,7 @@
 
 typedef struct Symbol
 {
+    int id;
     char name[256];
     char type[256];
     int size;
@@ -15,13 +16,14 @@ typedef struct Symbol
 Symbol symbolTable[MAX_SYMBOLS];
 int symbolCount = 0;
 
-void insertSymbol(char *name, char *type, int size)
+void insertSymbol(int id, char *name, char *type, int size)
 {
     if (symbolCount >= MAX_SYMBOLS)
     {
         printf("Symbol table full\n");
         return;
     }
+    symbolTable[symbolCount].id = id;
     strcpy(symbolTable[symbolCount].name, name);
     strcpy(symbolTable[symbolCount].type, type);
     symbolTable[symbolCount].size = size;
@@ -31,10 +33,10 @@ void insertSymbol(char *name, char *type, int size)
 void printSymbolTable()
 {
     printf("Symbol Table\n");
-    printf("Name\tType\tSize\n");
+    printf("ID\tName\tType\tSize\n");
     for (int i = 0; i < symbolCount; i++)
     {
-        printf("%s\t%s\t%d\n", symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+        printf("%d\t%s\t%s\t%d\n", symbolTable[i].id ,symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
     }
 }
 
@@ -58,6 +60,21 @@ int alreadyDeclared(char *name)
         return 1;
     }
     return 0;
+}
+
+int getSymbolId(char *name)
+{
+    Symbol *symbol = findSymbol(name);
+    if (symbol != NULL)
+    {
+        return symbol->id;
+    }
+    return -1;
+}
+
+int getLastSymbolId()
+{
+    return symbolTable[symbolCount - 1].id;
 }
 
 int isOperator(char *token)
@@ -231,10 +248,12 @@ int main()
                 else
                 {
                     // if it's not declared, add it to the symbol table
-                    insertSymbol(token, "identifier", 1);
-                    id++;
+                    id = getLastSymbolId() + 1;
+                    insertSymbol(id ,token, "identifier", 1);
+
                 }
-                fprintf(tokensDest, "<ID, %d> ", id);
+                int tokenId = getSymbolId(token);
+                fprintf(tokensDest, "<ID, %d> ", tokenId);
             }
         }
         else if (isdigit(c))
@@ -300,7 +319,7 @@ int main()
                 c = fgetc(fileSrc);
             }
         }
-        // Remove all the white spaces from the source file
+        // Remove all ther white spaces from the source file
         fprintf(cleanDest, "%c", c);
         c = fgetc(fileSrc);
     }

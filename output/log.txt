@@ -1,12 +1,14 @@
 Info: abc already declared
+Info: abc already declared
 Compilation Successful
 ----------------------------
 Symbol Table
 Name	Type	Size
 abc	identifier	1
 b	identifier	1
+x	identifier	1
 ----------------------------
-Date: Feb 18 2024
-Time: 21:43:31
+Date: Feb 19 2024
+Time: 09:29:32
 Compiled by: Abdullah Arab ( 2201805579 ) 
-compiled in 0.002828 seconds
+compiled in 0.004649 seconds
