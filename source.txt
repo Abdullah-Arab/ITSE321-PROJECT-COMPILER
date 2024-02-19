@@ -1,4 +1,4 @@
 int abc = abc + ( b * 3 ) ;
 string abc = " Hello world " ;
-float x = 3.14 ;
+int x = 3.14 ;
 

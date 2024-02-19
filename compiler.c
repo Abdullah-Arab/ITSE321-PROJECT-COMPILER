@@ -36,7 +36,7 @@ void printSymbolTable()
     printf("ID\tName\tType\tSize\n");
     for (int i = 0; i < symbolCount; i++)
     {
-        printf("%d\t%s\t%s\t%d\n", symbolTable[i].id ,symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+        printf("%d\t%s\t%s\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
     }
 }
 
@@ -249,8 +249,7 @@ int main()
                 {
                     // if it's not declared, add it to the symbol table
                     id = getLastSymbolId() + 1;
-                    insertSymbol(id ,token, "identifier", 1);
-
+                    insertSymbol(id, token, "identifier", 1);
                 }
                 int tokenId = getSymbolId(token);
                 fprintf(tokensDest, "<ID, %d> ", tokenId);
@@ -328,10 +327,10 @@ int main()
     fprintf(logDest, "Compilation Successful\n");
     fprintf(logDest, "----------------------------\n");
     fprintf(logDest, "Symbol Table\n");
-    fprintf(logDest, "Name\tType\tSize\n");
+    fprintf(logDest, "ID\tName\tT_Type\tSize\n");
     for (int i = 0; i < symbolCount; i++)
     {
-        fprintf(logDest, "%s\t%s\t%d\n", symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+        fprintf(logDest, "%d|\t%s\t%s\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
     }
     fprintf(logDest, "----------------------------\n");
 
