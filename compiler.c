@@ -11,12 +11,13 @@ typedef struct Symbol
     char name[256];
     char type[256];
     int size;
+    int location;
 } Symbol;
 
 Symbol symbolTable[MAX_SYMBOLS];
 int symbolCount = 0;
 
-void insertSymbol(int id, char *name, char *type, int size)
+void insertSymbol(int id, char *name, char *type, int size, int location)
 {
     if (symbolCount >= MAX_SYMBOLS)
     {
@@ -27,16 +28,17 @@ void insertSymbol(int id, char *name, char *type, int size)
     strcpy(symbolTable[symbolCount].name, name);
     strcpy(symbolTable[symbolCount].type, type);
     symbolTable[symbolCount].size = size;
+    symbolTable[symbolCount].location = location;
     symbolCount++;
 }
 
 void printSymbolTable()
 {
     printf("Symbol Table\n");
-    printf("ID\tName\tType\tSize\n");
+    printf("ID\tName\tType\tSize\tLocation\n");
     for (int i = 0; i < symbolCount; i++)
     {
-        printf("%d\t%s\t%s\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+        printf("%d\t%s\t%s\t%d\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
     }
 }
 
@@ -157,7 +159,7 @@ int main()
         printf("Error opening file!\n");
         return 1;
     }
-
+    int line = 1;
     // get source file char by char
     char c = fgetc(fileSrc);
     int id = 0;
@@ -196,6 +198,7 @@ int main()
                     }
                     c = fgetc(fileSrc);
                 }
+                c = fgetc(fileSrc);
             }
         }
 
@@ -250,7 +253,7 @@ int main()
                 {
                     // if it's not declared, add it to the symbol table
                     id = getLastSymbolId() + 1;
-                    insertSymbol(id, token, "identifier", 1);
+                    insertSymbol(id, token, "identifier", 1, line);
                 }
                 int tokenId = getSymbolId(token);
                 fprintf(tokensDest, "<ID, %d> ", tokenId);
@@ -313,6 +316,12 @@ int main()
             fprintf(tokensDest, "<%s> ", token);
             fprintf(cleanDest, "%s", token);
         }
+        else if (c = '\n')
+        {
+            line++;
+            printf("\033[0;31mError: Unknown character (\\n)\n");
+            c = fgetc(fileSrc);
+        }
         else
         {
             // if it's any other special character
@@ -326,7 +335,7 @@ int main()
             }
             else
             {
-                // fprintf(logDest, "Error: Unknown character (%c)\n", c);
+                fprintf(logDest, "Error: Unknown character (%c)\n", c);
                 switch (c)
                 {
                 case '\0':
@@ -334,6 +343,7 @@ int main()
                     fprintf(logDest, "Error: Unknown character (\\0)\n");
                     break;
                 case '\n':
+                    line++;
                     printf("\033[0;31mError: Unknown character (\\n)\n");
                     fprintf(logDest, "Error: Unknown character (\\n)\n");
                     break;
@@ -349,10 +359,10 @@ int main()
     fprintf(logDest, "Compilation Successful\n");
     fprintf(logDest, "----------------------------\n");
     fprintf(logDest, "Symbol Table\n");
-    fprintf(logDest, "ID\tName\tT_Type\tSize\n");
+    fprintf(logDest, "ID\tName\tT_Type\tSize\tLocation\n");
     for (int i = 0; i < symbolCount; i++)
     {
-        fprintf(logDest, "%d|\t%s\t%s\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size);
+        fprintf(logDest, "%d\t%s\t%s\t%d\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
     }
     fprintf(logDest, "----------------------------\n");
 
@@ -363,6 +373,7 @@ int main()
     // show compilation duration
     fprintf(logDest, "compiled in %f seconds\n", (double)clock() / CLOCKS_PER_SEC);
     printf("\033[0;32mCompilation Successful in \033[1;32m%f\n", (double)clock() / CLOCKS_PER_SEC);
+    printf("By DaDev 2201805579\n");
 
     // close file
     fclose(logDest);

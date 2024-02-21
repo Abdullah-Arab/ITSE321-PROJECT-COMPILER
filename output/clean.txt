@@ -1,1 +1,1 @@
-intx=x+(y*3);
+xy=x+bc=a+b*zd=a+b*z+c*x
