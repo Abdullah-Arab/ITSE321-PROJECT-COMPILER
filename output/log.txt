@@ -1,22 +1,21 @@
+Error: Unknown character (
+)
+Error: Unknown character (\n)
 Info: b already declared
-Info: a already declared
-Info: b already declared
-Info: z already declared
-Info: c already declared
 Info: x already declared
 Compilation Successful
 ----------------------------
 Symbol Table
-ID	Name	T_Type	Size	Location
-1	xy	identifier	1	1
-2	x	identifier	1	1
-3	b	identifier	1	1
-4	c	identifier	1	2
-5	a	identifier	1	2
-6	z	identifier	1	2
-7	d	identifier	1	3
+ID        Name      Type      Size      Location  
+1         xy        identifier1         1         
+2         x         identifier1         1         
+3         b         identifier1         1         
+4         d         identifier1         2         
+5         a         identifier1         2         
+6         z         identifier1         2         
+7         c         identifier1         2         
 ----------------------------
 Date: Feb 21 2024
-Time: 13:04:19
+Time: 13:22:30
 Compiled by: Abdullah Arab ( 2201805579 ) 
-compiled in 0.003088 seconds
+compiled in 0.002182 seconds

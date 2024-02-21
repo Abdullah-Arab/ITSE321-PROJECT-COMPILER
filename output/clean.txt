@@ -1,1 +1,1 @@
-xy=x+bc=a+b*zd=a+b*z+c*x
+xy=x+b;d=a+b*z+c*x;

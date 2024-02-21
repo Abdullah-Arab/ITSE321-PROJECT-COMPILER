@@ -35,10 +35,10 @@ void insertSymbol(int id, char *name, char *type, int size, int location)
 void printSymbolTable()
 {
     printf("Symbol Table\n");
-    printf("ID\tName\tType\tSize\tLocation\n");
+    printf("%-20s%-20s%-20s%-20s%-20s\n", "ID", "Name", "Type", "Size", "Location");
     for (int i = 0; i < symbolCount; i++)
     {
-        printf("%d\t%s\t%s\t%d\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
+        printf("%-20d%-20s%-20s%-20d%-20d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
     }
 }
 
@@ -316,12 +316,12 @@ int main()
             fprintf(tokensDest, "<%s> ", token);
             fprintf(cleanDest, "%s", token);
         }
-        else if (c = '\n')
-        {
-            line++;
-            printf("\033[0;31mError: Unknown character (\\n)\n");
-            c = fgetc(fileSrc);
-        }
+        // else if (c == '\n')
+        // {
+        //     line++;
+        //     printf("\033[0;31mError: Unknown character (\\n)\n");
+        //     c = fgetc(fileSrc);
+        // }
         else
         {
             // if it's any other special character
@@ -359,10 +359,11 @@ int main()
     fprintf(logDest, "Compilation Successful\n");
     fprintf(logDest, "----------------------------\n");
     fprintf(logDest, "Symbol Table\n");
-    fprintf(logDest, "ID\tName\tT_Type\tSize\tLocation\n");
+    fprintf(logDest, "%-10s%-10s%-10s%-10s%-10s\n", "ID", "Name", "Type", "Size", "Location");
     for (int i = 0; i < symbolCount; i++)
     {
-        fprintf(logDest, "%d\t%s\t%s\t%d\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
+        fprintf(logDest, "%-10d%-10s%-10s%-10d%-10d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
+        // fprintf(logDest, "%d\t%s\t%s\t%d\t%d\n", symbolTable[i].id, symbolTable[i].name, symbolTable[i].type, symbolTable[i].size, symbolTable[i].location);
     }
     fprintf(logDest, "----------------------------\n");
 
