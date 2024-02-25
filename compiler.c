@@ -170,6 +170,12 @@ int main()
         while (isspace(c))
         {
             c = fgetc(fileSrc);
+            if (c == '\n')
+            {
+                line++;
+                printf("\033[0;31mError: Unknown character (\\n)\n");
+                c = fgetc(fileSrc);
+            }
         }
 
         // skip comments
@@ -182,6 +188,7 @@ int main()
                 {
                     c = fgetc(fileSrc);
                 }
+                line++;
             }
             else if (c == '*')
             {
@@ -221,6 +228,11 @@ int main()
                 token[tokenIndex++] = c;
                 c = fgetc(fileSrc);
             }
+            if (c == '\n')
+            {
+                line++;
+            }
+
             token[tokenIndex] = '\0';
 
             // check if the word is a keyword
@@ -268,6 +280,7 @@ int main()
                 token[tokenIndex++] = c;
                 c = fgetc(fileSrc);
             }
+
             token[tokenIndex] = '\0';
             fprintf(tokensDest, "<CONST, %s> ", token);
             fprintf(cleanDest, "%s", token);
@@ -316,12 +329,12 @@ int main()
             fprintf(tokensDest, "<%s> ", token);
             fprintf(cleanDest, "%s", token);
         }
-        // else if (c == '\n')
-        // {
-        //     line++;
-        //     printf("\033[0;31mError: Unknown character (\\n)\n");
-        //     c = fgetc(fileSrc);
-        // }
+        else if (c == '\n')
+        {
+            line++;
+            printf("\033[0;31mError: Unknown character (\\n)\n");
+            c = fgetc(fileSrc);
+        }
         else
         {
             // if it's any other special character
@@ -332,6 +345,10 @@ int main()
                 fprintf(tokensDest, "<%s> ", token);
                 fprintf(cleanDest, "%s", token);
                 c = fgetc(fileSrc);
+                if (c == '\n')
+                {
+                    line++;
+                }
             }
             else
             {
@@ -354,8 +371,8 @@ int main()
             }
         }
     }
-    printSymbolTable();
 
+    printSymbolTable();
     fprintf(logDest, "Compilation Successful\n");
     fprintf(logDest, "----------------------------\n");
     fprintf(logDest, "Symbol Table\n");

@@ -1,3 +1,2 @@
 xy = x + b ;
-// c = a + b * z;
 d = a + b * z + c * x;
